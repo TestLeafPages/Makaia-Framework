@@ -1,5 +1,7 @@
 package lib.selenium;
 
+import java.util.List;
+
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -14,7 +16,15 @@ public interface WebDriverService {
 	 * @author Babu - TestLeaf
 	 * @throws NoSuchElementException
 	 */
-	public WebElement locateElement(String locator, String locValue) ;	
+	public WebElement locateElement(Locators locator, String locValue) ;
+	/**
+	 * This method will locate the multiple element using any given locator
+	 * @param locator  - The locator by which the element to be found
+	 * @param locValue - The locator value by which the element to be found
+	 * @author Babu - TestLeaf
+	 * @throws NoSuchElementException
+	 */
+	public List<WebElement> locateMultipleElements(Locators locator, String locValue) ;
 
 
 	/**

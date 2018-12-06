@@ -20,7 +20,7 @@ import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import util.Reporter;
+import reports.Reporter;
 
 public class WebDriverListener extends Reporter implements WebDriverEventListener {
 
@@ -29,100 +29,123 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	public int i = 1;
 	WebDriverWait wait;
 
+	@Override
 	public void beforeAlertAccept(WebDriver driver) {
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.alertIsPresent());
 	}
 
+	@Override
 	public void afterAlertAccept(WebDriver driver) {
 		reportStep("The alert is accepted", "pass");
 
 	}
 
+	@Override
 	public void afterAlertDismiss(WebDriver driver) {
 		reportStep("The alert is dismissed", "pass");
 
 	}
 
+	@Override
 	public void beforeAlertDismiss(WebDriver driver) {
 		wait.until(ExpectedConditions.alertIsPresent());
 	}
 
+	@Override
 	public void beforeNavigateTo(String url, WebDriver driver) {
 	}
 
+	@Override
 	public void afterNavigateTo(String url, WebDriver driver) {
 		reportStep("The browser loaded the URL " + url, "pass");
 
 
 	}
 
+	@Override
 	public void beforeNavigateBack(WebDriver driver) {
 	}
 
+	@Override
 	public void afterNavigateBack(WebDriver driver) {
 		reportStep("The browser has loaded the previous page from the history", "pass");
 		takeSnap();
 	}
 
+	@Override
 	public void beforeNavigateForward(WebDriver driver) {
 
 	}
 
+	@Override
 	public void afterNavigateForward(WebDriver driver) {
 		reportStep("The browser has loaded the next page from the history", "pass");
 
 
 	}
 
+	@Override
 	public void beforeNavigateRefresh(WebDriver driver) {
 
 	}
 
+	@Override
 	public void afterNavigateRefresh(WebDriver driver) {
 		reportStep("The browser has reloaded successfully", "pass");
 		takeSnap();
 	}
 
+	@Override
 	public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 	}
 
+	@Override
 	public void afterFindBy(By by, WebElement element, WebDriver driver) {
 	}
 
+	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
+	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		reportStep("The element " + element + " is clicked successfully", "pass");
 		takeSnap();
 	}
 
+	@Override
 	public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
 	}
 
+	@Override
 	public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
 		reportStep("The value " + keysToSend[0] + " is entered successfully in element " + element, "pass");
 	}
 
+	@Override
 	public void beforeScript(String script, WebDriver driver) {
 
 	}
 
+	@Override
 	public void afterScript(String script, WebDriver driver) {
 
 	}
 
+	@Override
 	public void beforeSwitchToWindow(String windowName, WebDriver driver) {
 
 	}
 
+	@Override
 	public void afterSwitchToWindow(String windowName, WebDriver driver) {
 		reportStep("The driver is moved to the window with title " + driver.getTitle(), "pass");
 	}
 
+	@Override
 	public void onException(Throwable throwable, WebDriver driver) {
 
 		if (throwable instanceof NoSuchFrameException) {
@@ -150,9 +173,11 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 		}
 	}
 
+	@Override
 	public <X> void beforeGetScreenshotAs(OutputType<X> target) {
 	}
 
+	@Override
 	public <X> void afterGetScreenshotAs(OutputType<X> target, X screenshot) {
 	}
 
@@ -161,7 +186,7 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 		long number = (long) Math.floor(Math.random() * 900000000L) + 10000000L;
 		try {
 			FileUtils.copyFile(driver.getScreenshotAs(OutputType.FILE),
-					new File("./reports/images/" + number + ".jpg"));
+					new File(file.toString()+"/images/" + number + ".jpg"));
 		} catch (WebDriverException e) {
 
 		} catch (IOException e) {
@@ -170,11 +195,13 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 		return number;
 	}
 
+	@Override
 	public void beforeGetText(WebElement element, WebDriver driver) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void afterGetText(WebElement element, WebDriver driver, String text) {
 		// TODO Auto-generated method stub
 		

@@ -16,27 +16,65 @@ import lib.listeners.WebDriverListener;
 public class WebDriverServiceImpl extends WebDriverListener implements WebDriverService{
 
 	@Override
-	public WebElement locateElement(String locator, String locValue) {
+	public WebElement locateElement(Locators locator, String locValue) {
 		try {
 			switch (locator) {
-			case "id": return driver.findElement(By.id(locValue));
-			case "class": return driver.findElement(By.className(locValue));
-			case "link" : return driver.findElement(By.linkText(locValue));
-			case "xpath": return driver.findElement(By.xpath(locValue));
-			case "tagName": return driver.findElement(By.tagName(locValue));
-			case "name": return driver.findElement(By.name(locValue));
-			case "plink": return driver.findElement(By.partialLinkText(locValue));
+			case CLASSNAME:
+				return driver.findElement(By.className(locValue));
+			case CSS:
+				return driver.findElement(By.cssSelector(locValue));
+			case ID:
+				return driver.findElement(By.id(locValue));
+			case LINKTETXT:
+				return driver.findElement(By.linkText(locValue));
+			case NAME:
+				return driver.findElement(By.name(locValue));
+			case XPATH:
+				return driver.findElement(By.xpath(locValue));
+			case PARTIALLINK:
+				return driver.findElement(By.partialLinkText(locValue));
+			case TAGNAME:
+				return driver.findElement(By.tagName(locValue));
+			case BUTTONTEXT:
+				return driver.findElement(By.xpath("//button[text()='"+locValue+"']"));
 			default:
 				break;
 			}
-		} catch (NoSuchElementException e) {
+		}catch (NoSuchElementException e) {
 			throw new RuntimeException();
 		}
 		return null;
-
-
 	}
-
+	@Override
+	public List<WebElement> locateMultipleElements(Locators locator, String locValue) {
+		try {
+			switch (locator) {
+			case CLASSNAME:
+				return driver.findElements(By.className(locValue));
+			case CSS:
+				return driver.findElements(By.cssSelector(locValue));
+			case ID:
+				return driver.findElements(By.id(locValue));
+			case LINKTETXT:
+				return driver.findElements(By.linkText(locValue));
+			case NAME:
+				return driver.findElements(By.name(locValue));
+			case XPATH:
+				return driver.findElements(By.xpath(locValue));
+			case PARTIALLINK:
+				return driver.findElements(By.partialLinkText(locValue));
+			case TAGNAME:
+				return driver.findElements(By.tagName(locValue));
+			case BUTTONTEXT:
+				return driver.findElements(By.xpath("//button[text()='"+locValue+"']"));
+			default:
+				break;
+			}
+		}catch (NoSuchElementException e) {
+			throw new RuntimeException();
+		}
+		return null;
+	}
 	@Override
 	public void type(WebElement ele, String data) {
 
