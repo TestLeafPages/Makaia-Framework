@@ -12,9 +12,9 @@ Selenium Suite - TESTLEAF
 ### Locators added as ENUM
 ```
 To avoid NullPointerException in string function
-Earlier Usage:
+*Earlier Usage:*
   WebElement eleUserName = locateElement("id", "username");
-Now Usage: 
+**Now Usage:**
   WebElement eleUserName = locateElement(Locators.ID, "username");
   
 New Locators
