@@ -10,17 +10,19 @@ Selenium Suite - TESTLEAF
 6) Word Report
 ```
 ### Locators added as ENUM
-```
-To avoid NullPointerException in string function
 *Earlier Usage:*
-  WebElement eleUserName = locateElement("id", "username");
+```
+ WebElement eleUserName = locateElement("id", "username");
+```
 **Now Usage:**
-  WebElement eleUserName = locateElement(Locators.ID, "username");
+```
+WebElement eleUserName = locateElement(Locators.ID, "username");
+```
   
 New Locators
 1) ButtonText
 2) PartialButtonText 
-```
+
 ### Pending task
 - [x] Existing issue fixed
 - [ ] Word Reports need to be done yet
