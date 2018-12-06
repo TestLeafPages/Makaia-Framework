@@ -9,3 +9,11 @@ Selenium Suite - TESTLEAF
 5. PDF Reports
 6. Word Report
 ```
+### Locators added as ENUM
+```
+To avoid NullPointerException in string function
+Earlier Usage:
+  WebElement eleUserName = locateElement("id", "username");
+Now Usage: 
+  WebElement eleUserName = locateElement(Locators.ID, "username");
+```
