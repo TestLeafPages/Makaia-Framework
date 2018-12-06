@@ -14,7 +14,11 @@ import org.openqa.selenium.support.ui.Select;
 import lib.listeners.WebDriverListener;
 
 public class WebDriverServiceImpl extends WebDriverListener implements WebDriverService{
-
+	/*
+	 * It will be used while using property file (multilanguage) - 
+	 * else How.How = id will be used
+	 * @see lib.selenium.WebDriverService#locateElement(lib.selenium.Locators, java.lang.String)
+	 */
 	@Override
 	public WebElement locateElement(Locators locator, String locValue) {
 		try {
@@ -26,7 +30,7 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 			case ID:
 				return driver.findElement(By.id(locValue));
 			case LINKTETXT:
-				return driver.findElement(By.linkText(locValue));
+				return driver.findElement(By.linkText(locValue.trim()));
 			case NAME:
 				return driver.findElement(By.name(locValue));
 			case XPATH:
@@ -37,6 +41,8 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 				return driver.findElement(By.tagName(locValue));
 			case BUTTONTEXT:
 				return driver.findElement(By.xpath("//button[text()='"+locValue+"']"));
+			case PARTIALBUTTONTEXT:
+				return driver.findElement(By.xpath("//button[contains(text(),'"+locValue+"')]"));
 			default:
 				break;
 			}
@@ -273,5 +279,5 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 			break;
 		}
 	}
-	
+
 }

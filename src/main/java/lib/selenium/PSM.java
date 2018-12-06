@@ -3,6 +3,9 @@ package lib.selenium;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -48,20 +51,33 @@ public class PSM extends WebDriverServiceImpl{
 	public  Object[][] getData(){
 		return DataInputProvider.getSheet(dataSheetName);		
 	}	
-	
+
 	@BeforeMethod
 	public void startApp() {
 		test = startTestCase(testNodes);
 		test.assignCategory(category);
 		test.assignAuthor(authors);
-		webdriver = new ChromeDriver();
+		switch (browserName) {
+		case "chrome":
+			webdriver = new ChromeDriver();
+			break;
+		case "firefox":
+			webdriver = new FirefoxDriver();
+			break;
+		case "IE":
+			webdriver = new InternetExplorerDriver();
+			break;
+		case "EDGE":
+			webdriver = new EdgeDriver();
+			break;
+		}
 		driver = new EventFiringWebDriver(webdriver);
 		driver.register(this);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(03, TimeUnit.SECONDS);
 		driver.get("http://leaftaps.com/opentaps/control/main");
 	}
-	
-	
+
+
 
 }

@@ -9,7 +9,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.MediaEntityModelProvider;
-import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
@@ -23,7 +23,7 @@ public abstract class Reporter {
 	protected static File file;
 
 	public void startResult() {
-		String date = new SimpleDateFormat("dd MMM yy").format(new Date());
+		String date = new SimpleDateFormat("dd-MMM-yy").format(new Date());
 		file = new File("./reports/"+date);
 		if(!file.exists()) {
 			System.out.println("Exists? "+file.exists());
@@ -43,8 +43,6 @@ public abstract class Reporter {
 		return suiteTest;
 	}
 
-
-
 	public ExtentTest startTestCase(String testNodes) {
 		test = 	suiteTest.createNode(testNodes);
 		return test;
@@ -55,10 +53,10 @@ public abstract class Reporter {
 
 	public void reportStep(String desc, String status, boolean bSnap)  {
 
+		long snapNumber = 100000L;
 		MediaEntityModelProvider img = null;
 		if(bSnap && !status.equalsIgnoreCase("INFO")){
 
-			long snapNumber = 100000L;
 			snapNumber = takeSnap();
 			try {
 				img = MediaEntityBuilder.createScreenCaptureFromPath
@@ -67,14 +65,19 @@ public abstract class Reporter {
 
 			}
 		}
-		Markup m = MarkupHelper.createCodeBlock(desc);
 
+		/*
+		 * OTHER MAKUPS
+		 * Markup markUp = MarkupHelper.createCodeBlock(desc);
+		 * Markup markUp = MarkupHelper.createTable(s);
+		 * 	String[][] s = {{desc}, {"some table"}};
+		 */
+
+		Markup markUp = MarkupHelper.createLabel(desc, ExtentColor.RED);
 		if(status.equalsIgnoreCase("PASS")) {
 			test.pass(desc, img);
 		}else if (status.equalsIgnoreCase("FAIL")) {
-			test.fail(desc, img);
-			test.log(Status.FAIL, m);
-			throw new RuntimeException();
+			test.fail("Error Snapshot", img).fail(markUp);
 		}else if (status.equalsIgnoreCase("WARNING")) {
 			test.warning(desc, img);
 		}else if (status.equalsIgnoreCase("INFO")) {

@@ -26,7 +26,6 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 
 	public RemoteWebDriver webdriver;
 	public EventFiringWebDriver driver;
-	public int i = 1;
 	WebDriverWait wait;
 
 	@Override
@@ -37,7 +36,7 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 
 	@Override
 	public void afterAlertAccept(WebDriver driver) {
-		reportStep("The alert is accepted", "pass");
+		reportStep("The alert is accepted", "pass", false);
 
 	}
 
@@ -70,7 +69,7 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	@Override
 	public void afterNavigateBack(WebDriver driver) {
 		reportStep("The browser has loaded the previous page from the history", "pass");
-		takeSnap();
+
 	}
 
 	@Override
@@ -93,7 +92,7 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	@Override
 	public void afterNavigateRefresh(WebDriver driver) {
 		reportStep("The browser has reloaded successfully", "pass");
-		takeSnap();
+
 	}
 
 	@Override
@@ -113,7 +112,6 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		reportStep("The element " + element + " is clicked successfully", "pass");
-		takeSnap();
 	}
 
 	@Override
@@ -149,27 +147,27 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	public void onException(Throwable throwable, WebDriver driver) {
 
 		if (throwable instanceof NoSuchFrameException) {
-			reportStep("No frame found\n" + throwable.getMessage(), "fail");
-			throw new RuntimeException();
+			reportStep(throwable.getMessage(), "fail");
+			throw new NoSuchFrameException(throwable.getMessage());
 		}
-		if (throwable instanceof NoSuchWindowException) {
-			reportStep("No frame found\n" + throwable.getMessage(), "fail");
-			throw new RuntimeException();
+		else if (throwable instanceof NoSuchWindowException) {
+			reportStep(throwable.getMessage(), "fail");
+			throw new NoSuchWindowException(throwable.getMessage());
 		}
-		if (throwable instanceof NoSuchSessionException) {
-			reportStep("NoSuchSessionException" + throwable.getMessage(), "fail");
-			throw new RuntimeException();
+		else if (throwable instanceof NoSuchSessionException) {
+			reportStep(throwable.getMessage(), "fail");
+			throw new NoSuchSessionException();
 		} 
 		else if (throwable instanceof NullPointerException) {
-			reportStep("NullPointerException" + throwable.getMessage(), "fail");
-			throw new RuntimeException();
+			reportStep(throwable.getMessage(), "fail");
+			throw new NullPointerException();
 		}
 		else if (throwable instanceof NoSuchElementException) {
-			reportStep("NoSuchElementException\n" + throwable.getMessage(), "fail");
-			throw new RuntimeException();
+			reportStep(throwable.toString(), "fail");
+			throw new NoSuchElementException(throwable.getMessage());
 		} 
 		else if (throwable instanceof NoAlertPresentException) {
-			reportStep("NoAlertPresentException", "fail");
+			reportStep(throwable.getMessage(), "fail");
 		}
 	}
 
@@ -198,12 +196,12 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	@Override
 	public void beforeGetText(WebElement element, WebDriver driver) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void afterGetText(WebElement element, WebDriver driver, String text) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
