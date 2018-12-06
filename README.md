@@ -21,3 +21,5 @@ New Locators
 1) ButtonText
 2) PartialButtonText 
 ```
+- [x] Existing issue fixed
+- [ ] Word Reports need to be done yet
