@@ -108,6 +108,11 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	public void click(WebElement ele) {
 		ele.click();		
 	}
+	public void clickWithNoListener(WebElement ele) {
+		driver.unregister(this);
+		ele.click();		
+		driver.register(this);
+	}
 
 	@Override
 	public String getText(WebElement ele) {
@@ -235,6 +240,17 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	public void switchToFrame(WebElement ele) {
 		driver.switchTo().frame(ele);
 	}
+	public void switchToFrame(String frameName) {
+		driver.switchTo().frame(frameName);
+	}
+
+	public void switchToFrame(int franeNumber) {
+		driver.switchTo().frame(franeNumber);
+	}
+	public void switchToFDefaultContent() {
+		driver.switchTo().defaultContent();
+	}
+
 
 	@Override
 	public void acceptAlert() {

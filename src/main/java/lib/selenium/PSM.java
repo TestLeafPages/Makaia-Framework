@@ -20,6 +20,7 @@ import util.DataInputProvider;
 public class PSM extends WebDriverServiceImpl{
 	public String browserName;
 	public String dataSheetName;
+	public String url;
 
 	@BeforeSuite
 	public void beforeSuite(){
@@ -54,6 +55,9 @@ public class PSM extends WebDriverServiceImpl{
 
 	@BeforeMethod
 	public void startApp() {
+		if(url == null) {
+			url = "http://leaftaps.com/opentaps/control/main";
+		}
 		test = startTestCase(testNodes);
 		test.assignCategory(category);
 		test.assignAuthor(authors);
@@ -75,7 +79,7 @@ public class PSM extends WebDriverServiceImpl{
 		driver.register(this);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(03, TimeUnit.SECONDS);
-		driver.get("http://leaftaps.com/opentaps/control/main");
+		driver.get(url);
 	}
 
 

@@ -11,6 +11,7 @@ import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -32,17 +33,18 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	public void beforeAlertAccept(WebDriver driver) {
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.alertIsPresent());
+	
 	}
 
 	@Override
 	public void afterAlertAccept(WebDriver driver) {
-		reportStep("The alert is accepted", "pass", false);
+		//		reportStep("The alert is accepted", "pass", false);
 
 	}
 
 	@Override
 	public void afterAlertDismiss(WebDriver driver) {
-		reportStep("The alert is dismissed", "pass");
+		//		reportStep("The alert is dismissed", "pass");
 
 	}
 
@@ -102,16 +104,23 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	@Override
 	public void afterFindBy(By by, WebElement element, WebDriver driver) {
 	}
-
+	String text ="";
 	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
+
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
+	if(	element.getText().length() == 0) {
+		text = element.getAttribute("value");
+	}else {
+		text = element.toString();
+	}
+		
 	}
 
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
-		reportStep("The element " + element + " is clicked successfully", "pass");
+		reportStep("The element " + text + " is clicked successfully", "pass", !false);
 	}
 
 	@Override
@@ -120,7 +129,7 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 
 	@Override
 	public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
-		reportStep("The value " + keysToSend[0] + " is entered successfully in element " + element, "pass");
+		reportStep("The value " + keysToSend[0] + " is entered successfully ", "pass");
 	}
 
 	@Override
@@ -151,7 +160,7 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 			throw new NoSuchFrameException(throwable.getMessage());
 		}
 		else if (throwable instanceof NoSuchWindowException) {
-			reportStep(throwable.getMessage(), "fail");
+			reportStep(throwable.getMessage(), "fail", false);
 			throw new NoSuchWindowException(throwable.getMessage());
 		}
 		else if (throwable instanceof NoSuchSessionException) {
@@ -167,7 +176,15 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 			throw new NoSuchElementException(throwable.getMessage());
 		} 
 		else if (throwable instanceof NoAlertPresentException) {
-			reportStep(throwable.getMessage(), "fail");
+			reportStep(throwable.getMessage(), "fail", false);
+		}
+		else if (throwable instanceof UnhandledAlertException) {
+			reportStep(throwable.getMessage(), "fail", false);
+		}
+		else if (throwable instanceof WebDriverException){
+			reportStep(throwable.getMessage(), "fail", false);
+		}else if (throwable instanceof Exception){
+			reportStep(throwable.getMessage(), "fail", false);
 		}
 	}
 

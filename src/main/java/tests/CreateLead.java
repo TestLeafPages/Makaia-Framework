@@ -15,7 +15,7 @@ public class CreateLead extends PSM {
         testNodes = "create";
         category = "Smoke";
         authors = "koushik";
-        browserName = "firefox";
+        browserName = "chrome";
 //        dataSheetName = "01";
     }
 
@@ -26,7 +26,7 @@ public class CreateLead extends PSM {
         type(eleUserName, "DemoSalesManager");
         WebElement elePassword = locateElement(Locators.ID, "password");
         type(elePassword, "crmsfa");
-        WebElement eleLogin = locateElement(Locators.BUTTONTEXT, "decorativeSubmi");
+        WebElement eleLogin = locateElement(Locators.CLASSNAME, "decorativeSubmit");
         click(eleLogin);
     }
 }
