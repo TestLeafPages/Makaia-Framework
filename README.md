@@ -19,7 +19,7 @@ Selenium Suite - TESTLEAF
 WebElement eleUserName = locateElement(Locators.ID, "username");
 ```
   
-New Locators
+**New Locators:**
 1) ButtonText
 2) PartialButtonText 
 

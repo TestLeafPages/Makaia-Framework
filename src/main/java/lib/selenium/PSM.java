@@ -55,6 +55,7 @@ public class PSM extends WebDriverServiceImpl{
 
 	@BeforeMethod
 	public void startApp() {
+		// if url not defined in test case default url should be app url
 		if(url == null) {
 			url = "http://leaftaps.com/opentaps/control/main";
 		}
