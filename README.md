@@ -26,3 +26,6 @@ WebElement eleUserName = locateElement(Locators.ID, "username");
 ### Pending task
 - [x] Existing issue fixed
 - [ ] Word Reports need to be done yet
+- [ ] TestNg listeners
+- [ ] POM parallel execution sample
+- [ ] BDD Reports
