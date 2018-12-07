@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -18,7 +20,7 @@ import org.testng.annotations.DataProvider;
 import util.DataInputProvider;
 
 public class PSM extends WebDriverServiceImpl{
-	public String browserName;
+	public Browser browserName;
 	public String dataSheetName;
 	public String url;
 
@@ -63,18 +65,27 @@ public class PSM extends WebDriverServiceImpl{
 		test.assignCategory(category);
 		test.assignAuthor(authors);
 		switch (browserName) {
-		case "chrome":
+		case Chrome:
 			webdriver = new ChromeDriver();
 			break;
-		case "firefox":
-			webdriver = new FirefoxDriver();
-			break;
-		case "IE":
-			webdriver = new InternetExplorerDriver();
-			break;
-		case "EDGE":
+		case Edge:
 			webdriver = new EdgeDriver();
 			break;
+		case Firefox:
+			webdriver = new FirefoxDriver();
+			break;
+		case IE:
+			webdriver = new InternetExplorerDriver();
+			break;
+		case Opera:
+			webdriver = new OperaDriver();
+			break;
+		case Safari:
+			webdriver = new SafariDriver();
+			break;
+		default:
+			break;
+	
 		}
 		driver = new EventFiringWebDriver(webdriver);
 		driver.register(this);

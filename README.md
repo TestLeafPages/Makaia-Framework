@@ -18,6 +18,15 @@ Selenium Suite - TESTLEAF
 ```
 WebElement eleUserName = locateElement(Locators.ID, "username");
 ```
+### Browsers added as ENUM
+*Earlier Usage:*
+```
+browserName = "chrome";
+```
+**Now Usage:**
+```
+browserName=Browser.Firefox;
+```
   
 **New Locators:**
 1) ButtonText

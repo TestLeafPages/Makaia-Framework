@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import lib.selenium.Browser;
 import lib.selenium.Locators;
 import lib.selenium.PSM;
 
@@ -15,7 +16,7 @@ public class CreateLead extends PSM {
         testNodes = "create";
         category = "Smoke";
         authors = "koushik";
-        browserName = "chrome";
+        browserName = Browser.Chrome;
 //        dataSheetName = "01";
     }
 

@@ -3,6 +3,7 @@ package tests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import lib.selenium.Browser;
 import lib.selenium.Locators;
 import lib.selenium.PSM;
 
@@ -14,7 +15,7 @@ public class AlertTest extends PSM {
         testNodes = testDescription;
         category = "Smoke";
         authors = "koushik";
-        browserName = "chrome";
+        browserName =Browser.Chrome;
         url = "https://www.w3schools.com/js/tryit.asp?filename=tryjs_prompt";
     }
 
