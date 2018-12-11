@@ -13,9 +13,13 @@ import org.openqa.selenium.support.ui.Select;
 
 import lib.listeners.WebDriverListener;
 
+/**
+ * @author dell
+ *
+ */
 public class WebDriverServiceImpl extends WebDriverListener implements WebDriverService{
 	/*
-	 * It will be used while using property file (multilanguage) - 
+	 * It will be used while using property file (multi-language) - 
 	 * else How.How = id will be used
 	 * @see lib.selenium.WebDriverService#locateElement(lib.selenium.Locators, java.lang.String)
 	 */
@@ -51,6 +55,10 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 		}
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see lib.selenium.WebDriverService#locateMultipleElements(lib.selenium.Locators, java.lang.String)
+	 */
 	@Override
 	public List<WebElement> locateMultipleElements(Locators locator, String locValue) {
 		try {
@@ -119,21 +127,40 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 		return ele.getText();
 	}
 
-	@Override
-	public void selectDropDownUsingVisibleText(WebElement ele, String value) {
-		new Select(ele).selectByVisibleText(value);
+	/**
+	 * @param dropDown - DropDown.VISIBLETEXT or DropDown.VALUE
+	 * @param ele - WebElement
+	 * @param value - To select
+	 */
+	public void selectDropDown(DropDown dropDown, WebElement ele, String value) {
+		Select sel = new Select(ele);
+		switch (dropDown) {
+		case VALUE:
+			sel.selectByValue(value);
+			break;
+		case VISIBLETEXT:
+			sel.selectByVisibleText(value);
+			break;
+		default:
+			break;
+		}
 
 	}
+	/**
+	 * @param dropDown - DropDown.INDEX
+	 * @param ele
+	 * @param index
+	 */
+	public void selectDropDown(DropDown dropDown, WebElement ele, int index) {
+		Select sel = new Select(ele);
+		switch (dropDown) {
+		case INDEX:
+			sel.selectByIndex(index);
+			break;
+		default:
+			break;
+		}
 
-	@Override
-	public void selectDropDownUsingValue(WebElement ele, String value) {
-		new Select(ele).selectByValue(value);
-
-	}
-
-	@Override
-	public void selectDropDownUsingIndex(WebElement ele, int index) {
-		new Select(ele).selectByIndex(index);		
 	}
 
 	@Override
