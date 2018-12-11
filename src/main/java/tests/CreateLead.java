@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import lib.selenium.Browser;
+import lib.selenium.DropDown;
 import lib.selenium.Locators;
 import lib.selenium.PSM;
 
@@ -29,6 +30,8 @@ public class CreateLead extends PSM {
         type(elePassword, "crmsfa");
         WebElement eleLogin = locateElement(Locators.CLASSNAME, "decorativeSubmit");
         click(eleLogin);
+        selectDropDown(DropDown.INDEX, eleLogin, 1);
+        selectDropDown(DropDown.VISIBLETEXT, eleLogin, "values");
     }
 }
 
