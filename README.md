@@ -30,12 +30,13 @@ browserName=Browser.Firefox;
 ### DropDown added as ENUM
 *Earlier Usage:*
 ```
-3 methods to select dropdown```
+3 methods to select dropdown
+```
 **Now Usage:**
 ```
  selectDropDown(DropDown.INDEX, eleLogin, 1);
  selectDropDown(DropDown.VISIBLETEXT, eleLogin, "values");
-  ```
+```
   
 **New Custom Locators:**
 1) ButtonText
