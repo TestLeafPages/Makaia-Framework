@@ -50,8 +50,6 @@ try{
 	CellType cellType = row.getCell(j).getCellTypeEnum();	
 	if (cellType != CellType.STRING) {
 		row.getCell(j).setCellType(CellType.STRING);
-	}else {
-		cellValue = row.getCell(j).getStringCellValue();
 	}
 	cellValue = row.getCell(j).getStringCellValue();
 }catch(NullPointerException e){}
