@@ -42,6 +42,22 @@ browserName=Browser.Firefox;
 1) ButtonText
 2) PartialButtonText 
 
+### Data Provider Updates
+```
+String cellValue = "";
+try{
+	//	cellValue = row.getCell(j).getStringCellValue();
+	CellType cellType = row.getCell(j).getCellTypeEnum();	
+	if (cellType != CellType.STRING) {
+		row.getCell(j).setCellType(CellType.STRING);
+	}else {
+		cellValue = row.getCell(j).getStringCellValue();
+	}
+	cellValue = row.getCell(j).getStringCellValue();
+}catch(NullPointerException e){}
+data[i-1][j]  = cellValue; // add to the data array
+						
+```
 ### Pending task
 - [x] Existing issue fixed
 - [ ] Word Reports need to be done yet
