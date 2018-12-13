@@ -1,7 +1,6 @@
 package tests;
 
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 import lib.selenium.Browser;
 import lib.selenium.Locators;
@@ -19,7 +18,6 @@ public class AlertTest extends PSM {
         url = "https://www.w3schools.com/js/tryit.asp?filename=tryjs_prompt";
     }
 
-    @Test()
     public void createLead() throws InterruptedException {
     	switchToFrame("iframeResult");
     	clickWithNoListener(locateElement(Locators.BUTTONTEXT, "Try it"));
