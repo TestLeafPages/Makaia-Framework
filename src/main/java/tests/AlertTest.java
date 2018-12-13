@@ -25,7 +25,6 @@ public class AlertTest extends PSM {
     	String text = getText(locateElement(Locators.ID, "demo"));
     	System.out.println(text);
     	
-    	
     }
 }
 
