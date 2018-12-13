@@ -2,6 +2,7 @@ package util;
 
 import java.io.FileInputStream;
 
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -37,10 +38,15 @@ public class DataInputProvider{
 						try {
 							String cellValue = "";
 							try{
+								//	cellValue = row.getCell(j).getStringCellValue();
+								CellType cellType = row.getCell(j).getCellTypeEnum();	
+								if (cellType != CellType.STRING) {
+									row.getCell(j).setCellType(CellType.STRING);
+								}else {
+									cellValue = row.getCell(j).getStringCellValue();
+								}
 								cellValue = row.getCell(j).getStringCellValue();
-							}catch(NullPointerException e){
-
-							}
+							}catch(NullPointerException e){}
 
 							data[i-1][j]  = cellValue; // add to the data array
 						} catch (Exception e) {

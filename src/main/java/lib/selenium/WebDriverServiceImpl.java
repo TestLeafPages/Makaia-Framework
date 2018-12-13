@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -252,10 +251,7 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 			System.out.println(list.size());
 			list.addAll(allwindowHandles);
 			driver.switchTo().window(list.get(index));
-		} catch (NoSuchWindowException e) {
-			System.err.println("NoSuchWindowException");
-			throw new RuntimeException();
-		}
+		} 
 		catch (IndexOutOfBoundsException e) {
 			System.err.println("IndexOutOfBoundsException");
 			throw new RuntimeException();
