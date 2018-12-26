@@ -20,7 +20,7 @@ public class AlertTest extends PSM {
 
     public void createLead() throws InterruptedException {
     	switchToFrame("iframeResult");
-    	clickWithNoListener(locateElement(Locators.BUTTONTEXT, "Try it"));
+    	clickWithNoListener(Locators.BUTTONTEXT, "Try it");
     	acceptAlert("koushik");
     	String text = getText(locateElement(Locators.ID, "demo"));
     	System.out.println(text);

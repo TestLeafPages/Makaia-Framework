@@ -24,7 +24,9 @@ public class CreateLead extends PSM {
     @Test()
     public void createLead() {
     	
+    	
         WebElement eleUserName = locateElement(Locators.ID, "username");
+        checkDropDownSorting(eleUserName);
         type(eleUserName, "DemoSalesManager");
         WebElement elePassword = locateElement(Locators.ID, "password");
         type(elePassword, "crmsfa");

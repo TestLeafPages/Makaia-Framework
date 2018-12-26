@@ -1,6 +1,7 @@
 package lib.selenium;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -8,7 +9,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import lib.listeners.WebDriverListener;
 
@@ -16,7 +19,9 @@ import lib.listeners.WebDriverListener;
  * @author dell
  *
  */
-public class WebDriverServiceImpl extends WebDriverListener implements WebDriverService{
+public class WebDriverServiceImpl extends WebDriverListener implements WebDriverService{	
+	private WebDriverWait wait;
+	private Actions builder;
 	/*
 	 * It will be used while using property file (multi-language) - 
 	 * else How.How = id will be used
@@ -88,6 +93,24 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 		}
 		return null;
 	}
+	/**
+	 * To check whether the drop down is sorted or not
+	 * @param WebElement
+	 */
+	public void checkDropDownSorting(WebElement source) {
+		Select sel = new Select(source);
+		List<WebElement> options = sel.getOptions();
+		List<String> originalDropDownValues = new ArrayList<>();
+		for (WebElement dd : options) {	originalDropDownValues.add(dd.getText());}
+		List<String> sortedValues = new ArrayList<>(originalDropDownValues);
+		Collections.sort(sortedValues);
+		if(originalDropDownValues.equals(sortedValues)) { System.out.println("matched");
+		reportStep("DropDown are sorted", "pass");
+		} else { System.out.println("not matched");
+		reportStep("DropDown are not sorted", "fail");}
+		originalDropDownValues.clear();
+		sortedValues.clear();
+	}
 	@Override
 	public void type(WebElement ele, String data) {
 
@@ -115,9 +138,14 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	public void click(WebElement ele) {
 		ele.click();		
 	}
-	public void clickWithNoListener(WebElement ele) {
+	public void click(Locators locator, String value) {
+		wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.elementToBeClickable(locateElement(locator, value))).click();
+	}
+	public void clickWithNoListener(Locators locator, String value) {
 		driver.unregister(this);
-		ele.click();		
+		wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.elementToBeClickable(locateElement(locator, value))).click();
 		driver.register(this);
 	}
 
