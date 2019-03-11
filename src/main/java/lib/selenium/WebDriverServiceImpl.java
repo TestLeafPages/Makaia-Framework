@@ -19,13 +19,16 @@ import lib.listeners.WebDriverListener;
  * @author dell
  *
  */
-public class WebDriverServiceImpl extends WebDriverListener implements WebDriverService{	
+public class WebDriverServiceImpl extends WebDriverListener implements WebDriverService {
 	private WebDriverWait wait;
 	private Actions builder;
+
 	/*
-	 * It will be used while using property file (multi-language) - 
-	 * else How.How = id will be used
-	 * @see lib.selenium.WebDriverService#locateElement(lib.selenium.Locators, java.lang.String)
+	 * It will be used while using property file (multi-language) - else How.How =
+	 * id will be used
+	 * 
+	 * @see lib.selenium.WebDriverService#locateElement(lib.selenium.Locators,
+	 * java.lang.String)
 	 */
 	@Override
 	public WebElement locateElement(Locators locator, String locValue) {
@@ -48,20 +51,24 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 			case TAGNAME:
 				return driver.findElement(By.tagName(locValue));
 			case BUTTONTEXT:
-				return driver.findElement(By.xpath("//button[text()='"+locValue+"']"));
+				return driver.findElement(By.xpath("//button[text()='" + locValue + "']"));
 			case PARTIALBUTTONTEXT:
-				return driver.findElement(By.xpath("//button[contains(text(),'"+locValue+"')]"));
+				return driver.findElement(By.xpath("//button[contains(text(),'" + locValue + "')]"));
 			default:
 				break;
 			}
-		}catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			throw new RuntimeException();
 		}
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see lib.selenium.WebDriverService#locateMultipleElements(lib.selenium.Locators, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * lib.selenium.WebDriverService#locateMultipleElements(lib.selenium.Locators,
+	 * java.lang.String)
 	 */
 	@Override
 	public List<WebElement> locateMultipleElements(Locators locator, String locValue) {
@@ -84,33 +91,41 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 			case TAGNAME:
 				return driver.findElements(By.tagName(locValue));
 			case BUTTONTEXT:
-				return driver.findElements(By.xpath("//button[text()='"+locValue+"']"));
+				return driver.findElements(By.xpath("//button[text()='" + locValue + "']"));
 			default:
 				break;
 			}
-		}catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			throw new RuntimeException();
 		}
 		return null;
 	}
+
 	/**
 	 * To check whether the drop down is sorted or not
+	 * 
 	 * @param WebElement
 	 */
 	public void checkDropDownSorting(WebElement source) {
 		Select sel = new Select(source);
 		List<WebElement> options = sel.getOptions();
 		List<String> originalDropDownValues = new ArrayList<>();
-		for (WebElement dd : options) {	originalDropDownValues.add(dd.getText());}
+		for (WebElement dd : options) {
+			originalDropDownValues.add(dd.getText());
+		}
 		List<String> sortedValues = new ArrayList<>(originalDropDownValues);
 		Collections.sort(sortedValues);
-		if(originalDropDownValues.equals(sortedValues)) { System.out.println("matched");
-		reportStep("DropDown are sorted", "pass");
-		} else { System.out.println("not matched");
-		reportStep("DropDown are not sorted", "fail");}
+		if (originalDropDownValues.equals(sortedValues)) {
+			System.out.println("matched");
+			reportStep("DropDown are sorted", "pass");
+		} else {
+			System.out.println("not matched");
+			reportStep("DropDown are not sorted", "fail");
+		}
 		originalDropDownValues.clear();
 		sortedValues.clear();
 	}
+
 	@Override
 	public void type(WebElement ele, String data) {
 
@@ -121,6 +136,7 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 		}
 
 	}
+
 	public void clearAndType(WebElement ele, String data) {
 
 		try {
@@ -136,12 +152,14 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 
 	@Override
 	public void click(WebElement ele) {
-		ele.click();		
+		ele.click();
 	}
+
 	public void click(Locators locator, String value) {
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(locateElement(locator, value))).click();
 	}
+
 	public void clickWithNoListener(Locators locator, String value) {
 		driver.unregister(this);
 		wait = new WebDriverWait(driver, 20);
@@ -156,23 +174,26 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 
 	/**
 	 * @param dropDown - DropDown.VISIBLETEXT or DropDown.VALUE
-	 * @param ele - WebElement
-	 * @param value - To select
+	 * @param ele      - WebElement
+	 * @param value    - To select
 	 */
 	public void selectDropDown(DropDown dropDown, WebElement ele, String value) {
 		Select sel = new Select(ele);
 		switch (dropDown) {
 		case VALUE:
 			sel.selectByValue(value);
+			reportStep(sel.getFirstSelectedOption().getText(), "pass");
 			break;
 		case VISIBLETEXT:
 			sel.selectByVisibleText(value);
+			reportStep(sel.getFirstSelectedOption().getText(), "pass");
 			break;
 		default:
 			break;
 		}
 
 	}
+
 	/**
 	 * @param dropDown - DropDown.INDEX
 	 * @param ele
@@ -183,6 +204,7 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 		switch (dropDown) {
 		case INDEX:
 			sel.selectByIndex(index);
+			reportStep(sel.getFirstSelectedOption().getText(), "pass");
 			break;
 		default:
 			break;
@@ -211,20 +233,20 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	@Override
 	public void verifyExactText(WebElement ele, String expectedText) {
 		String text = ele.getText();
-		if(text.equals(expectedText)) {
-			System.out.println("Expected text "+expectedText+" matched with the actual text"+text);
-		}else {
-			System.out.println("Expected text "+expectedText+" does not match with the actual text"+text);
+		if (text.equals(expectedText)) {
+			System.out.println("Expected text " + expectedText + " matched with the actual text" + text);
+		} else {
+			System.out.println("Expected text " + expectedText + " does not match with the actual text" + text);
 		}
 	}
 
 	@Override
 	public void verifyPartialText(WebElement ele, String expectedText) {
 		String text = ele.getText();
-		if(text.contains(expectedText)) {
-			System.out.println("Expected text "+expectedText+" matched with the actual text"+text);
-		}else {
-			System.out.println("Expected text "+expectedText+" does not match with the actual text"+text);
+		if (text.contains(expectedText)) {
+			System.out.println("Expected text " + expectedText + " matched with the actual text" + text);
+		} else {
+			System.out.println("Expected text " + expectedText + " does not match with the actual text" + text);
 		}
 
 	}
@@ -232,9 +254,9 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	@Override
 	public void verifyExactAttribute(WebElement ele, String attribute, String value) {
 		String actualAtb = ele.getAttribute(attribute);
-		if(actualAtb.equals(value)) {
+		if (actualAtb.equals(value)) {
 			System.out.println("Attribute is matched exactly");
-		}else {
+		} else {
 			System.out.println("Attribute is not matched exactly");
 		}
 	}
@@ -242,9 +264,9 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	@Override
 	public void verifyPartialAttribute(WebElement ele, String attribute, String value) {
 		String actualAtb = ele.getAttribute(attribute);
-		if(actualAtb.equals(value)) {
+		if (actualAtb.equals(value)) {
 			System.out.println("Attribute is partially matched");
-		}else {
+		} else {
 			System.out.println("Attribute is not matched");
 		}
 
@@ -252,23 +274,20 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 
 	@Override
 	public void verifySelected(WebElement ele) {
-		if(ele.isSelected()) {
-			System.out.println(ele+" is Selected");
-		}
-		else {
-			System.out.println(ele+" is not Selected");
+		if (ele.isSelected()) {
+			System.out.println(ele + " is Selected");
+		} else {
+			System.out.println(ele + " is not Selected");
 		}
 
 	}
 
 	@Override
-	public void verifyDisplayed(WebElement ele) {
-		if(ele.isDisplayed()) {
-			System.out.println(ele+" is Selected");
+	public boolean verifyDisplayed(WebElement ele) {
+		if (ele.isDisplayed()) {
+			return true;
 		}
-		else {
-			System.out.println(ele+" is not Selected");
-		}
+		return false;
 	}
 
 	@Override
@@ -279,8 +298,7 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 			System.out.println(list.size());
 			list.addAll(allwindowHandles);
 			driver.switchTo().window(list.get(index));
-		} 
-		catch (IndexOutOfBoundsException e) {
+		} catch (IndexOutOfBoundsException e) {
 			System.err.println("IndexOutOfBoundsException");
 			throw new RuntimeException();
 		}
@@ -291,6 +309,7 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	public void switchToFrame(WebElement ele) {
 		driver.switchTo().frame(ele);
 	}
+
 	public void switchToFrame(String frameName) {
 		driver.switchTo().frame(frameName);
 	}
@@ -298,15 +317,16 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	public void switchToFrame(int franeNumber) {
 		driver.switchTo().frame(franeNumber);
 	}
+
 	public void switchToFDefaultContent() {
 		driver.switchTo().defaultContent();
 	}
-
 
 	@Override
 	public void acceptAlert() {
 		driver.switchTo().alert().accept();
 	}
+
 	public void acceptAlert(String data) {
 		driver.switchTo().alert().sendKeys(data);
 		driver.switchTo().alert().accept();
@@ -332,6 +352,7 @@ public class WebDriverServiceImpl extends WebDriverListener implements WebDriver
 	public void closeAllBrowsers() {
 		driver.quit();
 	}
+
 	public void actions(WebElement ele, String actionToePerformed) {
 
 		Actions act = new Actions(driver);

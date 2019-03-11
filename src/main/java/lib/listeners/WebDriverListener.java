@@ -33,18 +33,18 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	public void beforeAlertAccept(WebDriver driver) {
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.alertIsPresent());
-	
+
 	}
 
 	@Override
 	public void afterAlertAccept(WebDriver driver) {
-		//		reportStep("The alert is accepted", "pass", false);
+		// reportStep("The alert is accepted", "pass", false);
 
 	}
 
 	@Override
 	public void afterAlertDismiss(WebDriver driver) {
-		//		reportStep("The alert is dismissed", "pass");
+		// reportStep("The alert is dismissed", "pass");
 
 	}
 
@@ -60,7 +60,6 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	@Override
 	public void afterNavigateTo(String url, WebDriver driver) {
 		reportStep("The browser loaded the URL " + url, "pass");
-
 
 	}
 
@@ -83,7 +82,6 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	public void afterNavigateForward(WebDriver driver) {
 		reportStep("The browser has loaded the next page from the history", "pass");
 
-
 	}
 
 	@Override
@@ -104,18 +102,20 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 	@Override
 	public void afterFindBy(By by, WebElement element, WebDriver driver) {
 	}
-	String text ="";
+
+	String text = "";
+
 	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
 
 		wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
-	if(	element.getText().length() == 0) {
-		text = element.getAttribute("value");
-	}else {
-		text = element.toString();
-	}
-		
+		if (element.getText().length() == 0) {
+			text = element.getAttribute("value");
+		} else {
+			text = element.getText();
+		}
+
 	}
 
 	@Override
@@ -154,38 +154,29 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 
 	@Override
 	public void onException(Throwable throwable, WebDriver driver) {
-
 		if (throwable instanceof NoSuchFrameException) {
 			reportStep(throwable.getMessage(), "fail");
 			throw new NoSuchFrameException(throwable.getMessage());
-		}
-		else if (throwable instanceof NoSuchWindowException) {
+		} else if (throwable instanceof NoSuchWindowException) {
 			reportStep(throwable.getMessage(), "fail", false);
 			throw new NoSuchWindowException(throwable.getMessage());
-		}
-		else if (throwable instanceof NoSuchSessionException) {
+		} else if (throwable instanceof NoSuchSessionException) {
 			reportStep(throwable.getMessage(), "fail");
 			throw new NoSuchSessionException();
-		} 
-		else if (throwable instanceof NullPointerException) {
+		} else if (throwable instanceof NullPointerException) {
 			reportStep(throwable.getMessage(), "fail");
 			throw new NullPointerException();
-		}
-		else if (throwable instanceof NoSuchElementException) {
+		} else if (throwable instanceof NoSuchElementException) {
 			reportStep(throwable.toString(), "fail");
 			throw new NoSuchElementException(throwable.getMessage());
-		} 
-		else if (throwable instanceof NoAlertPresentException) {
+		} else if (throwable instanceof NoAlertPresentException)
 			reportStep(throwable.getMessage(), "fail", false);
-		}
-		else if (throwable instanceof UnhandledAlertException) {
+		else if (throwable instanceof UnhandledAlertException)
 			reportStep(throwable.getMessage(), "fail", false);
-		}
-		else if (throwable instanceof WebDriverException){
+		else if (throwable instanceof WebDriverException)
 			reportStep(throwable.getMessage(), "fail", false);
-		}else if (throwable instanceof Exception){
+		else if (throwable instanceof Exception)
 			reportStep(throwable.getMessage(), "fail", false);
-		}
 	}
 
 	@Override
@@ -201,7 +192,7 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 		long number = (long) Math.floor(Math.random() * 900000000L) + 10000000L;
 		try {
 			FileUtils.copyFile(driver.getScreenshotAs(OutputType.FILE),
-					new File(file.toString()+"/images/" + number + ".jpg"));
+					new File(file.toString() + "/images/" + number + ".jpg"));
 		} catch (WebDriverException e) {
 
 		} catch (IOException e) {
@@ -210,13 +201,11 @@ public class WebDriverListener extends Reporter implements WebDriverEventListene
 		return number;
 	}
 
-	@Override
 	public void beforeGetText(WebElement element, WebDriver driver) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void afterGetText(WebElement element, WebDriver driver, String text) {
 		// TODO Auto-generated method stub
 
